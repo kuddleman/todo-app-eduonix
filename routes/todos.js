@@ -29,4 +29,51 @@ router.post('/', async(req, res)=>{
     }
 })
 
+router.get('/:id', async(req, res)=>{
+    try {
+        const todo = await Todo.findById(req.params.id)
+        res.json(todo)
+    } catch(err) {
+        res.send(`Error: ${err}`)
+    }
+})
+
+router.patch('/:id', async(req, res)=>{
+  try{
+    const todo = await Todo.findById(req.params.id)
+    const {id} = req.params 
+    const { title, 
+            dueByDate, 
+            createdOn, 
+            status, 
+            isActive, 
+            userName } = req.body
+    
+    if(title) todo.title = title
+    if(dueByDate) todo.dueByDate = dueByDate
+    if(createdOn) todo.createdOn = createdOn
+    if(status) todo.status = status
+    if(isActive) todo.isActive = isActive
+    if(userName) todo.userName = userName
+
+    todo.save()
+    res.send(`To-Do with title: ${title} has been updated!`)
+  } catch(err) {
+      res.send(`Error: ${err}`)
+  }
+})
+
+router.delete('/:id', async(req, res)=>{
+    try {
+        const todo = await Todo.findById(req.params.id)
+        todo.delete()
+        res.send(`To-do with the title  ${todo.title} has been deleted!`)
+
+    } catch(err) {
+        res.send(`Error: ${err}`)
+    }
+})
+
+
+
 export default router
