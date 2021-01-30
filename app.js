@@ -1,6 +1,6 @@
 import express from 'express'
 import mongoose from 'mongoose'
-//import todoRouter from './routes/todos.js'
+import todoRouter from './routes/todos.js'
 const url = 'mongodb://localhost/TodoDBex'
 
 const app = express()
@@ -8,7 +8,7 @@ const PORT = 8000
 
 app.use(express.json())
 
-//app.use('/todos',todoRouter)
+app.use('/todos',todoRouter)
 
 app.get('/', (req, res) => res.send(`Hello from Homepage!`))
 
